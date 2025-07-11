@@ -1,4 +1,4 @@
-package com.tc.config;
+package com.tc.infrastructure.config;
 
 import com.azure.storage.queue.QueueAsyncClient;
 import com.azure.storage.queue.QueueClientBuilder;
@@ -10,13 +10,16 @@ import org.springframework.context.annotation.Configuration;
 public class AzureQueueConfig {
 
     @Value("${azure.queue.connection-string}")
-    private String connectionString;
+    private String azureQueueConnectionString;
+
+    @Value("${azure.queue.name}")
+    private String azureQueueName;
 
     @Bean
     public QueueAsyncClient queueAsyncClient() {
         return new QueueClientBuilder()
-                .connectionString(connectionString)
-                .queueName("orders")
+                .connectionString(azureQueueConnectionString)
+                .queueName(azureQueueName)
                 .buildAsyncClient();
     }
 }

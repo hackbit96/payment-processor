@@ -1,4 +1,4 @@
-package com.tc.config;
+package com.tc.infrastructure.config;
 
 import com.azure.cosmos.ConsistencyLevel;
 import com.azure.cosmos.CosmosAsyncClient;
@@ -15,53 +15,44 @@ import org.springframework.context.annotation.Configuration;
 public class AzureCosmosConfig {
 
     @Value("${azure.cosmos.uri}")
-    private String uri;
+    private String azureCosmosUri;
 
     @Value("${azure.cosmos.key}")
-    private String key;
+    private String azureCosmosKey;
 
-    private static final String DATABASE_NAME = "orders-db";
-    private static final String CONTAINER_NAME = "orders";
-    private static final String PARTITION_KEY_PATH = "/customerId";
+    @Value("${azure.cosmos.database-name}")
+    private String azureCosmosDatabaseName;
 
+    @Value("${azure.cosmos.container-name}")
+    private String azureCosmosContainerName;
+
+    @Value("${azure.cosmos.partition-key-path}")
+    private String azureCosmosPartitionKeyPath;
 
     @Bean
     public CosmosAsyncClient cosmosAsyncClient() {
         return new CosmosClientBuilder()
-                .endpoint(uri)
-                .key(key)
-                .directMode() // Uso directo (más rápido en local)
+                .endpoint(azureCosmosUri)
+                .key(azureCosmosKey)
+                .directMode()
                 .consistencyLevel(ConsistencyLevel.EVENTUAL)
-                .gatewayMode() // para evitar problemas con el emulador si Direct falla
+                .gatewayMode()
                 .contentResponseOnWriteEnabled(true)
                 .buildAsyncClient();
     }
 
-    /*
     @Bean
     public CosmosAsyncContainer cosmosAsyncContainer(CosmosAsyncClient client) {
-        return client.getDatabase("orders-db").getContainer("orders");
-    }
-
-     */
-
-    @Bean
-    public CosmosAsyncContainer cosmosAsyncContainer(CosmosAsyncClient client) {
-        return client.createDatabaseIfNotExists(DATABASE_NAME)
+        return client.createDatabaseIfNotExists(azureCosmosDatabaseName)
                 .flatMap(databaseResponse -> {
-                    CosmosAsyncDatabase database = client.getDatabase(DATABASE_NAME);
+                    CosmosAsyncDatabase database = client.getDatabase(azureCosmosDatabaseName);
                     CosmosContainerProperties containerProperties =
-                            new CosmosContainerProperties(CONTAINER_NAME, PARTITION_KEY_PATH);
-
-                    // Puedes ajustar el throughput (por defecto: 400 RU/s)
+                            new CosmosContainerProperties(azureCosmosContainerName, azureCosmosPartitionKeyPath);
                     ThroughputProperties throughput = ThroughputProperties.createManualThroughput(400);
-
                     return database.createContainerIfNotExists(containerProperties, throughput);
                 })
-                .map(containerResponse -> {
-                    return client.getDatabase(DATABASE_NAME).getContainer(CONTAINER_NAME);
-                })
-                .block(); // 👈 bloqueamos para esperar a que esté listo
+                .map(containerResponse -> client.getDatabase(azureCosmosDatabaseName).getContainer(azureCosmosContainerName))
+                .block();
     }
 }
 

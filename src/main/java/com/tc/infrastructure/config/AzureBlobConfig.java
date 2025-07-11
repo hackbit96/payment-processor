@@ -1,4 +1,4 @@
-package com.tc.config;
+package com.tc.infrastructure.config;
 
 import com.azure.storage.blob.BlobContainerAsyncClient;
 import com.azure.storage.blob.BlobContainerClientBuilder;
@@ -12,11 +12,14 @@ public class AzureBlobConfig {
     @Value("${azure.blob.connection-string}")
     private String connectionString;
 
+    @Value("${azure.blob.name}")
+    private String azureBlobName;
+
     @Bean
     public BlobContainerAsyncClient blobContainerClient() {
         return new BlobContainerClientBuilder()
                 .connectionString(connectionString)
-                .containerName("audit")
+                .containerName(azureBlobName)
                 .buildAsyncClient();
     }
 }

@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "24d5bb6b-e647-4e31-8e52-83b1650f05ba",
+		"name": "ms-order-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4446149",
+		"_collection_link": "https://solar-station-96692.postman.co/workspace/TC~39587710-4e78-4961-81a2-c805fc981415/collection/4446149-24d5bb6b-e647-4e31-8e52-83b1650f05ba?action=share&source=collection_link&creator=4446149"
+	},
+	"item": [
+		{
+			"name": "01 - Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\": \"ORD123\",\r\n    \"customerId\": \"CUS001\",\r\n    \"items\": [\r\n        {\r\n            \"productId\": \"PROD01\",\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"productId\": \"PROD02\",\r\n            \"quantity\": 1\r\n        }\r\n    ],\r\n    \"totalAmount\": 150.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/v1/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

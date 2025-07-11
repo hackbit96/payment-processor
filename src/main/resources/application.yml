@@ -7,11 +7,22 @@ spring:
 
 azure:
   queue:
-    connection-string: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1"
+    name: "orders"
+    max-messages: 10
+    connection-string: "${CONNECTION-ORDERS}"
 
   blob:
-    connection-string: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1"
+    name: "audit"
+    connection-string: "${CONNECTION-ORDERS}"
 
   cosmos:
-    uri: "https://localhost:8081"
-    key: "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="
+    uri: "${COSMOS-URI}"
+    key: "${COSMOS-KEY}"
+    database-name: "${COSMOS-DATABASE}"
+    container-name: "${COSMOS-CONTAINER-NAME}"
+    partition-key-path: "${COSMOS-PARTITION-KEY-PATH}"
+
+audit:
+  file:
+    success: "ORDER_%s_FECHA_%s_UUID_%s.json"
+    error: "ERROR_%s.txt"

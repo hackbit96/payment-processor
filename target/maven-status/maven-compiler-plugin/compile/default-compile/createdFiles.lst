@@ -1,0 +1,9 @@
+com\tc\application\service\OrderProcessor.class
+com\tc\domain\model\Item$ItemBuilder.class
+com\tc\domain\model\Order.class
+com\tc\domain\model\Order$OrderBuilder.class
+com\tc\infrastructure\config\AzureCosmosConfig.class
+com\tc\infrastructure\config\AzureQueueConfig.class
+com\tc\PaymentProcessorApplication.class
+com\tc\infrastructure\config\AzureBlobConfig.class
+com\tc\domain\model\Item.class

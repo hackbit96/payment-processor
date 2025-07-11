@@ -1,0 +1,57 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# IDEs (IntelliJ, Eclipse, VSCode)
+.idea/
+*.iml
+*.ipr
+*.iws
+*.class
+.project
+.settings/
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+**/logs/
+
+# Certificados o llaves locales (por seguridad)
+*.crt
+*.pem
+*.key
+
+# Archivos de sistema
+*.swp
+*.swo
+
+# Sistema operativo
+ehthumbs.db
+Desktop.ini
+
+# Build
+build/
+bin/
+
+# Azure emulator cache / snapshots (si existieran)
+**/azure-emulator/**
+
+# Archivos temporales
+*.tmp
+*.bak
+*.old
+
+# Output generado por pruebas
+surefire-reports/
+test-output/
+
+# Dependencias descargadas (si no usas Maven Wrapper)
+.mvn/
