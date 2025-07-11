@@ -1,0 +1,35 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-processor
+  template:
+    metadata:
+      labels:
+        app: payment-processor
+    spec:
+      containers:
+      - name: payment-processor
+        image: yourregistry/payment-processor:latest
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: order-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-processor
+spec:
+  selector:
+    app: payment-processor
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
